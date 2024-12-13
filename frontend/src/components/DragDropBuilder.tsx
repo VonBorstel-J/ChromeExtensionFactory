@@ -1,7 +1,8 @@
+// /frontend/src/components/DragDropBuilder.tsx
 import React, { useEffect, useRef } from 'react';
 import interact from 'interactjs';
 
-const DragDropBuilder = () => {
+const DragDropBuilder: React.FC = () => {
   const draggableRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {

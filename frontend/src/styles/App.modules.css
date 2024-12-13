@@ -1,0 +1,16 @@
+/* /frontend/src/styles/App.module.css */
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background: #f0f0f0;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .container {
+    padding: 1rem;
+  }
+  

@@ -1,0 +1,15 @@
+# Frontend Service
+
+## Overview
+The frontend is built with React and provides a user-friendly interface for interacting with the Chrome Extension Factory. It includes features such as user authentication, project management, template browsing, and live code editing with previews.
+
+## Setup Instructions
+
+### Environment Variables
+Ensure all required environment variables are set in the `.env` file at the root of the project.
+
+### Running the Frontend
+The frontend service is managed via Docker Compose. To start the frontend along with its dependencies:
+
+```bash
+make run

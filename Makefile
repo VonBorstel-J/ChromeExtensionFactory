@@ -5,5 +5,5 @@ stop:
 	docker-compose down
 
 test:
-	docker-compose exec backend pytest tests/
+	docker-compose exec backend pytest
 

@@ -1,10 +1,11 @@
+# /backend/routes/templates_routes.py
 from flask import Blueprint, jsonify
 from auth import token_required
 import os
 
 templates_bp = Blueprint('templates', __name__)
 
-@templates_bp.route('/templates', methods=['GET'])
+@templates_bp.route('/', methods=['GET'])
 @token_required
 def list_templates(current_user):
     template_path = os.path.join(os.path.dirname(__file__), '..', 'templates')

@@ -1,3 +1,4 @@
+// /frontend/src/components/CodeEditor.tsx
 import React, { useEffect, useRef } from 'react';
 import * as monaco from 'monaco-editor';
 
@@ -21,6 +22,10 @@ const CodeEditor: React.FC<Props> = ({ initialCode, onChange }) => {
         onChange(editorRef.current.getValue());
       }
     });
+
+    return () => {
+      editorRef.current?.dispose();
+    };
   }, [initialCode, onChange]);
 
   return <div id="editor-container" style={{ height: '400px', border: '1px solid #ccc' }}></div>;

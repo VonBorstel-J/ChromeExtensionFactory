@@ -1,3 +1,4 @@
+# /backend/requirements.txt
 
 Flask==2.1.2
 python-dotenv==0.21.0
@@ -13,3 +14,7 @@ stripe==4.0.0
 PyJWT==2.4.0
 prometheus_client==0.15.0
 pytest==7.1.2
+pydantic==1.10.2
+flasgger==0.9.5
+flask-limiter==2.6.0
+flask-talisman==0.8.1

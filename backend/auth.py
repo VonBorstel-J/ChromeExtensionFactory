@@ -1,3 +1,4 @@
+# /backend/auth.py
 import jwt
 from flask import request, jsonify, current_app
 from functools import wraps

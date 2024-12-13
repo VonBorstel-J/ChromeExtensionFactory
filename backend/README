@@ -1,0 +1,16 @@
+# /backend/README.md
+# Backend Service
+
+## Overview
+The backend service is built with Flask and handles API requests, user authentication, project management, template handling, and integrates with Celery for asynchronous tasks.
+
+## Setup Instructions
+
+### Environment Variables
+Ensure all required environment variables are set in the `.env` file at the root of the project.
+
+### Running the Backend
+The backend service is managed via Docker Compose. To start the backend along with its dependencies:
+
+```bash
+make run
