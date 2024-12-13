@@ -1,0 +1,23 @@
+{
+    "name": "extension-factory-frontend",
+    "version": "1.0.0",
+    "scripts": {
+      "start": "react-scripts start",
+      "build": "react-scripts build"
+    },
+    "dependencies": {
+      "@types/node": "^16.0.0",
+      "@types/react": "^18.0.0",
+      "@types/react-dom": "^18.0.0",
+      "react": "^18.0.0",
+      "react-dom": "^18.0.0",
+      "monaco-editor": "^0.33.0",
+      "interactjs": "^1.10.11",
+      "axios": "^0.27.2",
+      "react-joyride": "^2.3.1"
+    },
+    "devDependencies": {
+      "typescript": "^4.7.4"
+    }
+  }
+  
