@@ -1,29 +1,52 @@
 # /backend/config.py
 import os
+from google.cloud import secretmanager
+import logging
 
 class Config:
-    SECRET_KEY = os.environ.get("SECRET_KEY", "changeme")
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    JWT_SECRET = os.environ.get("JWT_SECRET", "changeme")
-    API_KEY = os.environ.get("API_KEY", "changeme")
+    # Initialize Secret Manager Client
+    client = secretmanager.SecretManagerServiceClient()
 
-    AWS_ACCESS_KEY_ID = os.environ.get("AWS_ACCESS_KEY_ID")
-    AWS_SECRET_ACCESS_KEY = os.environ.get("AWS_SECRET_ACCESS_KEY")
-    S3_BUCKET_NAME = os.environ.get("S3_BUCKET_NAME")
-    S3_REGION = os.environ.get("S3_REGION")
+    def get_secret(secret_name: str) -> str:
+        project_id = os.getenv('GCP_PROJECT_ID')
+        if not project_id:
+            logging.error("GCP_PROJECT_ID is not set in environment variables.")
+            raise EnvironmentError("GCP_PROJECT_ID is not set.")
+        name = f"projects/{project_id}/secrets/{secret_name}/versions/latest"
+        try:
+            response = Config.client.access_secret_version(request={"name": name})
+            secret = response.payload.data.decode('UTF-8')
+            return secret
+        except Exception as e:
+            logging.error(f"Failed to access secret {secret_name}: {str(e)}")
+            raise e
 
-    OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
-    ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY")
-    GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+    # Fetch secrets
+    SECRET_KEY = get_secret("FLASK_SECRET_KEY")
+    JWT_SECRET = get_secret("JWT_SECRET")
+    API_KEY = get_secret("API_KEY")
+    DATABASE_URL = get_secret("DATABASE_URL")
 
-    CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", "redis://redis:6379/0")
-    CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND", "redis://redis:6379/0")
+    # AWS S3
+    AWS_ACCESS_KEY_ID = get_secret("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = get_secret("AWS_SECRET_ACCESS_KEY")
+    S3_BUCKET_NAME = get_secret("S3_BUCKET_NAME")
+    S3_REGION = get_secret("S3_REGION")
 
-    STRIPE_API_KEY = os.environ.get("STRIPE_API_KEY")
-    STRIPE_WEBHOOK_SECRET = os.environ.get("STRIPE_WEBHOOK_SECRET")
+    # AI Providers
+    OPENAI_API_KEY = get_secret("OPENAI_API_KEY")
+    ANTHROPIC_API_KEY = get_secret("ANTHROPIC_API_KEY")
+    GEMINI_API_KEY = get_secret("GEMINI_API_KEY")
 
-    CHROME_WEBSTORE_CLIENT_ID = os.environ.get("CHROME_WEBSTORE_CLIENT_ID")
-    CHROME_WEBSTORE_CLIENT_SECRET = os.environ.get("CHROME_WEBSTORE_CLIENT_SECRET")
-    CHROME_WEBSTORE_REFRESH_TOKEN = os.environ.get("CHROME_WEBSTORE_REFRESH_TOKEN")
+    # Celery
+    CELERY_BROKER_URL = get_secret("CELERY_BROKER_URL")
+    CELERY_RESULT_BACKEND = get_secret("CELERY_RESULT_BACKEND")
 
+    # Stripe
+    STRIPE_API_KEY = get_secret("STRIPE_API_KEY")
+    STRIPE_WEBHOOK_SECRET = get_secret("STRIPE_WEBHOOK_SECRET")
+
+    # Chrome Web Store
+    CHROME_WEBSTORE_CLIENT_ID = get_secret("CHROME_WEBSTORE_CLIENT_ID")
+    CHROME_WEBSTORE_CLIENT_SECRET = get_secret("CHROME_WEBSTORE_CLIENT_SECRET")
+    CHROME_WEBSTORE_REFRESH_TOKEN = get_secret("CHROME_WEBSTORE_REFRESH_TOKEN")

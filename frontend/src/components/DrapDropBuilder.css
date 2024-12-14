@@ -1,0 +1,27 @@
+/* /frontend/src/components/DragDropBuilder.css */
+.draggable {
+    width: 100px;
+    height: 100px;
+    background: #ccc;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    transition: transform 0.2s ease;
+  }
+  
+  @media (max-width: 768px) {
+    .draggable {
+      width: 80px;
+      height: 80px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .draggable {
+      width: 60px;
+      height: 60px;
+    }
+  }
+  

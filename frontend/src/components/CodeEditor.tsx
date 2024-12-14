@@ -1,6 +1,7 @@
 // /frontend/src/components/CodeEditor.tsx
 import React, { useEffect, useRef } from 'react';
 import * as monaco from 'monaco-editor';
+import './CodeEditor.css';
 
 type Props = {
   initialCode: string;
@@ -16,6 +17,7 @@ const CodeEditor: React.FC<Props> = ({ initialCode, onChange }) => {
       value: initialCode,
       language: 'javascript',
       theme: 'vs-dark',
+      automaticLayout: true, // Ensures the editor resizes with its container
     });
     editorRef.current.onDidChangeModelContent(() => {
       if (editorRef.current) {
@@ -28,7 +30,7 @@ const CodeEditor: React.FC<Props> = ({ initialCode, onChange }) => {
     };
   }, [initialCode, onChange]);
 
-  return <div id="editor-container" style={{ height: '400px', border: '1px solid #ccc' }}></div>;
+  return <div id="editor-container" className="code-editor"></div>;
 };
 
 export default CodeEditor;

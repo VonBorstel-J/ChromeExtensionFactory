@@ -3,6 +3,8 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './AuthContext';
 import ErrorBoundary from './components/ErrorBoundary';
+import TooltipGuide from './components/TooltipGuide';
+import LoadingIndicator from './components/LoadingIndicator';
 
 // Lazy loaded routes
 const Home = React.lazy(() => import('./routes/Home'));
@@ -18,7 +20,8 @@ function App() {
     <AuthProvider>
       <Router>
         <ErrorBoundary>
-          <Suspense fallback={<div>Loading...</div>}>
+          <TooltipGuide />
+          <Suspense fallback={<LoadingIndicator />}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />

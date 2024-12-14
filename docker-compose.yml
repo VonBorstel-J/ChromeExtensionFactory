@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   db:
-    image: postgres:13
+    image: postgres:13-alpine
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
@@ -19,25 +19,27 @@ services:
   backend:
     build:
       context: ./backend
+      dockerfile: Dockerfile
     depends_on:
       - db
       - redis
     env_file:
       - .env
-    command: ["flask", "run", "--host=0.0.0.0", "--port=5000"]
     ports:
       - "5000:5000"
+    restart: always
 
   frontend:
     build:
       context: ./frontend
+      dockerfile: Dockerfile
     env_file:
       - .env
-    command: ["npm", "run", "start"]
     ports:
-      - "3000:3000"
+      - "3000:80"
     depends_on:
       - backend
+    restart: always
 
 volumes:
   db_data:

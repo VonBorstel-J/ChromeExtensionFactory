@@ -1,16 +1,61 @@
-# /backend/README.md
-# Backend Service
+# VonBorstel-J-ChromeExtensionFactory
 
 ## Overview
-The backend service is built with Flask and handles API requests, user authentication, project management, template handling, and integrates with Celery for asynchronous tasks.
+
+The **Chrome Extension Factory** is a robust platform enabling users to create, manage, and publish custom Chrome extensions effortlessly. It offers a seamless interface for designing extensions, managing projects, and integrating with the Chrome Web Store for easy publication.
+
+## Features
+
+- **User Authentication:** Secure signup and login functionalities.
+- **Project Management:** Create and manage multiple extension projects.
+- **Template Library:** Browse and select from a variety of pre-built templates.
+- **Live Code Editing:** Real-time code editing with live previews.
+- **Publishing:** Publish extensions directly to the Chrome Web Store.
+- **Marketplace:** Discover and monetize extensions.
+- **Payment Integration:** Manage subscriptions and payments via Stripe.
+
+## Directory Structure
+
+VonBorstel-J-ChromeExtensionFactory/ ├── README.md ├── .env ├── docker-compose.yml ├── Makefile ├── frontend/ │ ├── src/ │ ├── README.md │ ├── Dockerfile │ ├── package.json │ ├── public/ │ └── nginx/ ├── backend/ │ ├── payments.py │ ├── schemas.py │ ├── prometheus_metrics.py │ ├── routes/ │ ├── tasks/ │ ├── requirements.txt │ ├── ai_service.py │ ├── migrations/ │ ├── auth.py │ ├── README.md │ ├── app.py │ ├── Dockerfile │ ├── config.py │ ├── templates/ │ ├── templates_service.py │ ├── models.py │ ├── alembic.ini │ ├── db.py │ ├── analytics.py │ └── tests/ └── .gitattributes
+
+makefile
+Copy code
 
 ## Setup Instructions
 
+### Prerequisites
+
+- **Docker & Docker Compose:** Ensure Docker and Docker Compose are installed on your machine.
+- **GCP Account:** For Secret Manager integration.
+- **AWS Account:** For S3 storage.
+- **Stripe Account:** For payment processing.
+- **Chrome Web Store Developer Account:** For publishing extensions.
+
 ### Environment Variables
-Ensure all required environment variables are set in the `.env` file at the root of the project.
 
-### Running the Backend
-The backend service is managed via Docker Compose. To start the backend along with its dependencies:
+Create a `.env` file in the root directory with the following variables. **Note:** In production, secrets are managed via GCP Secret Manager.
 
-```bash
-make run
+```env
+# Backend
+FLASK_ENV=production
+GCP_PROJECT_ID=your_gcp_project_id
+
+# Database
+DATABASE_URL=postgresql://user:pass@db:5432/extension_factory
+
+# Redis/Celery
+CELERY_BROKER_URL=redis://redis:6379/0
+CELERY_RESULT_BACKEND=redis://redis:6379/0
+
+# AWS S3
+S3_BUCKET_NAME=your_bucket_name
+S3_REGION=your_region
+
+# Stripe
+STRIPE_API_KEY=your_stripe_api_key
+STRIPE_WEBHOOK_SECRET=your_stripe_webhook_secret
+
+# Chrome Web Store
+CHROME_WEBSTORE_CLIENT_ID=your_client_id
+CHROME_WEBSTORE_CLIENT_SECRET=your_secret
+CHROME_WEBSTORE_REFRESH_TOKEN=your_refresh_token
