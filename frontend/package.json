@@ -8,21 +8,27 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
-    "@types/node": "^16.0.0",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0",
-    "axios": "^0.27.2",
-    "axios-retry": "^3.3.1",
-    "interactjs": "^1.10.11",
-    "monaco-editor": "^0.33.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-joyride": "^2.3.1",
-    "react-responsive": "^9.0.0",
-    "react-router-dom": "^6.3.0",
-    "react-skeleton-loader": "^1.0.0"
+    "@types/node": "",
+    "@types/react": "",
+    "@types/react-dom": "",
+    "axios": "",
+    "axios-retry": "",
+    "interactjs": "",
+    "monaco-editor": "",
+    "react": "",
+    "react-dom": "",
+    "react-joyride": "",
+    "react-responsive": "",
+    "react-router-dom": "",
+    "react-scripts": "",
+    "react-skeleton-loader": ""
   },
   "devDependencies": {
-    "typescript": "^4.7.4"
-  }
+    "typescript": ""
+  },
+  "description": "The frontend is built with React and provides a user-friendly interface for interacting with the Chrome Extension Factory. It includes features such as user authentication, project management, template browsing, and live code editing with previews.",
+  "main": "src/index.js",
+  "keywords": ["react", "frontend", "chrome-extension", "factory"],
+  "author": "Jordan VonBorstel",
+  "license": "MIT"
 }

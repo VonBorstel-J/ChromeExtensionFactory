@@ -1,0 +1,104 @@
+# General Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Logs
+logs/
+*.log
+*.log.*
+*.pid
+*.seed
+*.pid.lock
+
+# Runtime and temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+*.swo
+.cache/
+.pnp.*
+.pnp.js
+
+# Build artifacts
+build/
+dist/
+out/
+
+# Dependency directories
+jspm_packages/
+bower_components/
+
+# Test Coverage
+coverage/
+.nyc_output/
+
+# Environment variables
+.env
+.env.*.local
+
+# Local credentials and configuration
+*.key
+*.crt
+*.pem
+*.cert
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Operating System files
+.DS_Store
+Thumbs.db
+*.Spotlight-V100
+*.Trashes
+*.swp
+*.swo
+
+# Frontend-specific
+**/frontend/node_modules/
+**/frontend/build/
+**/frontend/.cache/
+**/frontend/dist/
+**/frontend/.env
+
+# Backend-specific
+**/backend/node_modules/
+**/backend/.env
+**/backend/logs/
+**/backend/tmp/
+**/backend/coverage/
+**/backend/dist/
+**/backend/.cache/
+
+# Temporary and generated files
+*.lock
+*.gz
+*.bz2
+*.tgz
+*.7z
+*.tar
+*.zip
+
+# Docker
+**/backend/docker-compose.override.yml
+**/backend/.dockerignore
+**/frontend/docker-compose.override.yml
+**/frontend/.dockerignore
+
+# Debugger configurations
+*.launch.json
+*.vs/
+.vscode-test/
+
+# Miscellaneous
+*.iml
+*.lock
+*.bak
+*.swp
+/venv

@@ -3,6 +3,11 @@
 # Stage 1: Build the backend dependencies
 FROM python:3.10-slim as builder
 WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y gcc libpq-dev && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements and install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
@@ -11,16 +16,12 @@ FROM python:3.10-slim
 WORKDIR /app
 COPY --from=builder /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
 COPY . .
+
+# Set environment variables
 ENV FLASK_APP=app.py
 ENV PYTHONUNBUFFERED=1
 
-# Set GCP credentials path
-ENV GOOGLE_APPLICATION_CREDENTIALS=/secrets/gcp_credentials.json
-
-# Copy GCP credentials (ensure this file is added securely during deployment)
-COPY gcp_credentials.json /secrets/gcp_credentials.json
-
-# Expose port
+# Expose port for the Flask application
 EXPOSE 5000
 
 # Start Gunicorn with Gevent workers
