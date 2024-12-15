@@ -1,4 +1,4 @@
-# /backend/models.py 
+# /backend/models.py
 from db import db
 from datetime import datetime
 
@@ -7,6 +7,9 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     hashed_password = db.Column(db.String(128), nullable=False)
     is_premium = db.Column(db.Boolean, default=False)
+    # NEW FIELD: subscription_tier
+    subscription_tier = db.Column(db.String(20), default="free")  # free, pro, enterprise
+
     projects = db.relationship('Project', backref='user', lazy=True)
     ratings = db.relationship('TemplateRating', backref='user', lazy=True)
 
@@ -14,7 +17,8 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            "is_premium": self.is_premium
+            "is_premium": self.is_premium,
+            "subscription_tier": self.subscription_tier
         }
 
 class Project(db.Model):

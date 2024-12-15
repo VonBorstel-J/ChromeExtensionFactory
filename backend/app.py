@@ -11,6 +11,7 @@ from auth import token_required
 from routes.auth_routes import auth_bp
 from routes.templates_routes import templates_bp
 from routes.test_routes import test_bp
+from routes.payments_routes import payments_bp  # NEW IMPORT
 from flasgger import Swagger
 from flask_talisman import Talisman
 
@@ -62,6 +63,7 @@ with app.app_context():
 app.register_blueprint(auth_bp, url_prefix='/auth')
 app.register_blueprint(templates_bp, url_prefix='/templates')
 app.register_blueprint(test_bp, url_prefix='/test')
+app.register_blueprint(payments_bp, url_prefix='/payments')  # REGISTER PAYMENTS ROUTE
 
 # Setup Prometheus Metrics
 setup_metrics(app)

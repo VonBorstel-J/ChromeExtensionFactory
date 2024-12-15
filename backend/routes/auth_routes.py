@@ -14,7 +14,8 @@ def signup():
     validated_data = UserSignupSchema(**data)
     email = validated_data.email
     password = generate_password_hash(validated_data.password)
-    user = User(email=email, hashed_password=password)
+    # Set subscription_tier explicitly to "free"
+    user = User(email=email, hashed_password=password, subscription_tier="free")
     db.session.add(user)
     db.session.commit()
     token = generate_token(user.id)

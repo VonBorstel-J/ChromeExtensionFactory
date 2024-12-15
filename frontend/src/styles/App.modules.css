@@ -14,3 +14,25 @@ body {
     padding: 1rem;
   }
   
+  .subscription-options {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .subscription-tier {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    flex: 1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .subscription-tier h3 {
+    margin-top: 0;
+  }
+  
+  .subscription-tier button {
+    margin-top: 1rem;
+  }
+  

@@ -3,6 +3,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import apiClient from '../apiClient';
 import { AuthContext } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
+import Subscription from '../components/Subscription'; 
+import '../styles/Dashboard.css'; 
 
 interface Project {
   id: number;
@@ -11,24 +13,41 @@ interface Project {
   created_at: string;
 }
 
+interface PopularTemplate {
+  template: string;
+  count: number;
+}
+
 const Dashboard: React.FC = () => {
   const { token } = useContext(AuthContext);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [popularTemplates, setPopularTemplates] = useState<PopularTemplate[]>([]);
   const [error, setError] = useState('');
+  const [userTier, setUserTier] = useState<'free'|'pro'|'enterprise'>('free'); // Assume we can fetch the user's tier
+  const [earnings, setEarnings] = useState<number>(0); // Dummy data
+  const [animating, setAnimating] = useState<boolean>(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchProjects = async () => {
+    const fetchData = async () => {
       try {
-        const response = await apiClient.get('/projects/', {
-          headers: { Authorization: token },
-        });
-        setProjects(response.data);
+        const [projRes, tempRes] = await Promise.all([
+          apiClient.get('/projects/', { headers: { Authorization: token } }),
+          apiClient.get('/analytics/popular-templates', { headers: { Authorization: token } })
+        ]);
+        setProjects(projRes.data);
+        setPopularTemplates(tempRes.data);
+        // Dummy logic for user tier and earnings:
+        // In a real scenario, you'd fetch this from a user endpoint.
+        setUserTier('pro'); // Example: set to 'pro' to display earnings
+        setEarnings(123.45); // Dummy earnings data
+        setAnimating(true);
       } catch (err) {
-        setError('Failed to load projects.');
+        setError('Failed to load dashboard data.');
       }
     };
-    fetchProjects();
+    fetchData();
   }, [token]);
 
   const handlePublish = async (projectId: number) => {
@@ -37,7 +56,6 @@ const Dashboard: React.FC = () => {
         headers: { Authorization: token },
       });
       const downloadUrl = response.data.download_url;
-      // Optionally, save the download URL to the project or state
       alert(`Extension published successfully! Download URL: ${downloadUrl}`);
     } catch (err) {
       alert('Failed to publish extension.');
@@ -66,13 +84,48 @@ const Dashboard: React.FC = () => {
     <div className="container">
       <h1>Dashboard</h1>
       {error && <p className="error">{error}</p>}
-      <ul>
+
+      {/* Analytics Dashboard Cards */}
+      <div className={`dashboard-cards ${animating ? 'fade-in' : ''}`}>
+        <div className="card">
+          <h2>Total Projects</h2>
+          <p>{projects.length}</p>
+        </div>
+        <div className="card">
+          <h2>Popular Templates</h2>
+          <ul>
+            {popularTemplates.map((pt) => (
+              <li key={pt.template}>{pt.template} ({pt.count})</li>
+            ))}
+          </ul>
+        </div>
+        {userTier !== 'free' && (
+          <div className="card">
+            <h2>Earnings Summary</h2>
+            <p>${earnings.toFixed(2)}</p>
+          </div>
+        )}
+      </div>
+
+      {/* Subscription Component */}
+      <div className="subscription-section">
+        <h2>Upgrade Your Plan</h2>
+        <Subscription currentTier={userTier} />
+      </div>
+
+      {/* Projects List */}
+      <h2>Your Projects</h2>
+      <ul className="projects-list">
         {projects.map((project) => (
-          <li key={project.id}>
-            <h2>{project.name}</h2>
+          <li key={project.id} className="project-item">
+            <h3>{project.name}</h3>
             <button onClick={() => navigate(`/projects/${project.id}`)}>Edit</button>
-            <button onClick={() => handlePublish(project.id)}>Publish</button>
-            <button onClick={() => handleDownload(project.id)}>Download</button>
+            {userTier !== 'free' && (
+              <>
+                <button onClick={() => handlePublish(project.id)}>Publish</button>
+                <button onClick={() => handleDownload(project.id)}>Download</button>
+              </>
+            )}
           </li>
         ))}
       </ul>
