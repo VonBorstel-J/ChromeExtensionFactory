@@ -1,11 +1,11 @@
 // /frontend/src/components/LoadingIndicator.tsx
 import React from 'react';
-import './LoadingIndicator.css';
+import styles from '../styles/LoadingIndicator.module.css';
 
 const LoadingIndicator: React.FC = () => {
   return (
-    <div className="loading-container" role="status" aria-live="polite">
-      <div className="spinner"></div>
+    <div className={styles.loadingContainer} role="status" aria-live="polite">
+      <div className={styles.spinner}></div>
       <span>Loading...</span>
     </div>
   );

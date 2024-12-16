@@ -1,0 +1,48 @@
+/* /frontend/src/styles/NotFound.module.css */
+
+.notFoundContainer {
+    padding: 2rem;
+    text-align: center;
+    background: #fff;
+    border-radius: 8px;
+    margin: 2rem auto;
+    max-width: 600px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .notFoundContainer h1 {
+    color: #e53935;
+    margin-bottom: 1rem;
+  }
+  
+  .notFoundContainer p {
+    margin-bottom: 2rem;
+    color: #555;
+  }
+  
+  .buttonGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .buttonGroup button {
+    padding: 0.75rem 1.5rem;
+    background: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .buttonGroup button:hover {
+    background: #45a049;
+  }
+  
+  @media (min-width: 480px) {
+    .buttonGroup {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+  

@@ -1,38 +1,23 @@
 /* /frontend/src/styles/App.module.css */
-body {
-    margin: 0;
-    font-family: sans-serif;
-    background: #f0f0f0;
-  }
-  
-  a {
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  .container {
-    padding: 1rem;
-  }
-  
-  .subscription-options {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-  
-  .subscription-tier {
-    background: #fff;
-    border-radius: 8px;
-    padding: 1rem;
-    flex: 1;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  }
-  
-  .subscription-tier h3 {
-    margin-top: 0;
-  }
-  
-  .subscription-tier button {
-    margin-top: 1rem;
-  }
-  
+
+.subscriptionOptions {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.subscriptionTier {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1rem;
+  flex: 1;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.subscriptionTier h3 {
+  margin-top: 0;
+}
+
+.subscriptionTier button {
+  margin-top: 1rem;
+}

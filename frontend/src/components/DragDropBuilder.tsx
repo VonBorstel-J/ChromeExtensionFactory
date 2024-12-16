@@ -1,7 +1,7 @@
 // /frontend/src/components/DragDropBuilder.tsx
 import React, { useEffect, useRef } from 'react';
 import interact from 'interactjs';
-import './DragDropBuilder.css';
+import styles from '../styles/DragDropBuilder.module.css';
 
 const DragDropBuilder: React.FC = () => {
   const draggableRef = useRef<HTMLDivElement>(null);
@@ -29,7 +29,7 @@ const DragDropBuilder: React.FC = () => {
     }
   }, []);
 
-  return <div ref={draggableRef} className="draggable">Drag me!</div>;
+  return <div ref={draggableRef} className={styles.draggable}>Drag me!</div>;
 };
 
 export default DragDropBuilder;

@@ -1,0 +1,22 @@
+/* /frontend/src/styles/ProjectEditor.module.css */
+
+.projectEditorContainer {
+    padding: 1rem;
+  }
+  
+  .editorSection {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    .editorSection {
+      flex-direction: row;
+    }
+  }
+  
+  .editorSection > div {
+    flex: 1;
+  }
+  

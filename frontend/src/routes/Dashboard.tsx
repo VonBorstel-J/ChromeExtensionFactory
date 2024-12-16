@@ -4,7 +4,7 @@ import apiClient from '../apiClient';
 import { AuthContext } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
 import Subscription from '../components/Subscription'; 
-import '../styles/Dashboard.css'; 
+import styles from '../styles/Dashboard.module.css'; 
 
 interface Project {
   id: number;
@@ -33,8 +33,8 @@ const Dashboard: React.FC = () => {
     const fetchData = async () => {
       try {
         const [projRes, tempRes] = await Promise.all([
-          apiClient.get('/projects/', { headers: { Authorization: token } }),
-          apiClient.get('/analytics/popular-templates', { headers: { Authorization: token } })
+          apiClient.get('/projects/', { headers: { Authorization: `Bearer ${token}` } }),
+          apiClient.get('/analytics/popular-templates', { headers: { Authorization: `Bearer ${token}` } })
         ]);
         setProjects(projRes.data);
         setPopularTemplates(tempRes.data);
@@ -53,7 +53,7 @@ const Dashboard: React.FC = () => {
   const handlePublish = async (projectId: number) => {
     try {
       const response = await apiClient.post(`/publish/publish/${projectId}`, null, {
-        headers: { Authorization: token },
+        headers: { Authorization: `Bearer ${token}` },
       });
       const downloadUrl = response.data.download_url;
       alert(`Extension published successfully! Download URL: ${downloadUrl}`);
@@ -65,7 +65,7 @@ const Dashboard: React.FC = () => {
   const handleDownload = async (projectId: number) => {
     try {
       const response = await apiClient.get(`/publish/download/${projectId}`, {
-        headers: { Authorization: token },
+        headers: { Authorization: `Bearer ${token}` },
         responseType: 'blob',
       });
       const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -81,26 +81,26 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="container">
+    <div className={styles.dashboardContainer}>
       <h1>Dashboard</h1>
-      {error && <p className="error">{error}</p>}
+      {error && <p className={styles.error}>{error}</p>}
 
       {/* Analytics Dashboard Cards */}
-      <div className={`dashboard-cards ${animating ? 'fade-in' : ''}`}>
-        <div className="card">
+      <div className={`${styles.dashboardCards} ${animating ? styles.fadeIn : ''}`}>
+        <div className={styles.card}>
           <h2>Total Projects</h2>
           <p>{projects.length}</p>
         </div>
-        <div className="card">
+        <div className={styles.card}>
           <h2>Popular Templates</h2>
-          <ul>
+          <ul className={styles.popularTemplates}>
             {popularTemplates.map((pt) => (
               <li key={pt.template}>{pt.template} ({pt.count})</li>
             ))}
           </ul>
         </div>
         {userTier !== 'free' && (
-          <div className="card">
+          <div className={styles.card}>
             <h2>Earnings Summary</h2>
             <p>${earnings.toFixed(2)}</p>
           </div>
@@ -108,24 +108,26 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* Subscription Component */}
-      <div className="subscription-section">
+      <div className={styles.subscriptionSection}>
         <h2>Upgrade Your Plan</h2>
         <Subscription currentTier={userTier} />
       </div>
 
       {/* Projects List */}
       <h2>Your Projects</h2>
-      <ul className="projects-list">
+      <ul className={styles.projectsList}>
         {projects.map((project) => (
-          <li key={project.id} className="project-item">
+          <li key={project.id} className={styles.projectItem}>
             <h3>{project.name}</h3>
-            <button onClick={() => navigate(`/projects/${project.id}`)}>Edit</button>
-            {userTier !== 'free' && (
-              <>
-                <button onClick={() => handlePublish(project.id)}>Publish</button>
-                <button onClick={() => handleDownload(project.id)}>Download</button>
-              </>
-            )}
+            <div className={styles.projectButtons}>
+              <button onClick={() => navigate(`/projects/${project.id}`)}>Edit</button>
+              {userTier !== 'free' && (
+                <>
+                  <button onClick={() => handlePublish(project.id)}>Publish</button>
+                  <button onClick={() => handleDownload(project.id)}>Download</button>
+                </>
+              )}
+            </div>
           </li>
         ))}
       </ul>

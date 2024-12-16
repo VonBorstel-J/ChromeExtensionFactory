@@ -1,5 +1,6 @@
 // /frontend/src/components/LivePreview.tsx
 import React, { useEffect, useRef } from 'react';
+import styles from '../styles/LivePreview.module.css';
 
 type Props = {
   code: string;
@@ -15,7 +16,7 @@ const LivePreview: React.FC<Props> = ({ code }) => {
       // Adjust height after loading the content
       const adjustHeight = () => {
         try {
-          if (iframe.contentDocument && iframe.contentDocument.body) {
+          if (iframe.contentDocument?.body) {
             const height = iframe.contentDocument.body.scrollHeight;
             iframe.style.height = `${height + 20}px`; // Add some padding
           }
@@ -26,9 +27,6 @@ const LivePreview: React.FC<Props> = ({ code }) => {
 
       // Wait a bit for content to render, then adjust
       setTimeout(adjustHeight, 200);
-
-      // Listen for changes: you can also use a MutationObserver inside the iframe if needed.
-      // For simplicity, just call again after a timeout if code changes frequently.
     }
   }, [code]);
 
@@ -36,7 +34,7 @@ const LivePreview: React.FC<Props> = ({ code }) => {
     <iframe
       ref={iframeRef}
       title="Live Preview"
-      style={{ width: '100%', border: '1px solid #ccc', transition: 'height 0.2s ease' }}
+      className={styles.livePreview}
     />
   );
 };

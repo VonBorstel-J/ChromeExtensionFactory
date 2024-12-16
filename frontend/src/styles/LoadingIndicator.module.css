@@ -1,5 +1,6 @@
-/* /frontend/src/components/LoadingIndicator.css */
-.loading-container {
+/* /frontend/src/styles/LoadingIndicator.module.css */
+
+.loadingContainer {
     display: flex;
     align-items: center;
     justify-content: center;

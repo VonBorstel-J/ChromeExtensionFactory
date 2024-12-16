@@ -1,6 +1,7 @@
 // /frontend/src/components/Subscription.tsx
 import React from 'react';
 import apiClient from '../apiClient';
+import styles from '../styles/Subscription.module.css';
 
 interface SubscriptionProps {
   currentTier: 'free' | 'pro' | 'enterprise';
@@ -29,23 +30,35 @@ const Subscription: React.FC<SubscriptionProps> = ({ currentTier }) => {
   };
 
   return (
-    <div className="subscription-options">
-      <div className="subscription-tier">
+    <div className={styles.subscriptionOptions}>
+      <div className={styles.subscriptionTier}>
         <h3>Free</h3>
         <p>Limited projects, no publishing.</p>
-        {currentTier === 'free' ? <button disabled>Current Plan</button> : <button onClick={() => handleSubscribe('free')}>Subscribe</button>}
+        {currentTier === 'free' ? (
+          <button disabled>Current Plan</button>
+        ) : (
+          <button onClick={() => handleSubscribe('free')}>Subscribe</button>
+        )}
       </div>
-      <div className="subscription-tier">
+      <div className={styles.subscriptionTier}>
         <h3>Pro</h3>
         <p>Unlimited projects, publishing.</p>
         <p>$15/month</p>
-        {currentTier === 'pro' ? <button disabled>Current Plan</button> : <button onClick={() => handleSubscribe('pro')}>Subscribe</button>}
+        {currentTier === 'pro' ? (
+          <button disabled>Current Plan</button>
+        ) : (
+          <button onClick={() => handleSubscribe('pro')}>Subscribe</button>
+        )}
       </div>
-      <div className="subscription-tier">
+      <div className={styles.subscriptionTier}>
         <h3>Enterprise</h3>
         <p>Includes analytics and more advanced features.</p>
         <p>$50/month</p>
-        {currentTier === 'enterprise' ? <button disabled>Current Plan</button> : <button onClick={() => handleSubscribe('enterprise')}>Subscribe</button>}
+        {currentTier === 'enterprise' ? (
+          <button disabled>Current Plan</button>
+        ) : (
+          <button onClick={() => handleSubscribe('enterprise')}>Subscribe</button>
+        )}
       </div>
     </div>
   );

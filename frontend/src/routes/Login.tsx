@@ -4,6 +4,7 @@ import { AuthContext } from '../AuthContext';
 import apiClient from '../apiClient';
 import { useNavigate } from 'react-router-dom';
 import LoadingIndicator from '../components/LoadingIndicator';
+import styles from '../styles/Login.module.css';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -33,9 +34,9 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="container">
+    <div className={styles.loginContainer}>
       <h1>Login</h1>
-      <form onSubmit={handleLogin} aria-describedby="error-message">
+      <form onSubmit={handleLogin} aria-describedby="error-message" className={styles.loginForm}>
         <label htmlFor="email">Email:</label>
         <input
           id="email"
@@ -57,7 +58,7 @@ const Login: React.FC = () => {
           aria-required="true"
         />
         {error && (
-          <p className="error" id="error-message" role="alert">
+          <p className={styles.error} id="error-message" role="alert">
             {error}
           </p>
         )}

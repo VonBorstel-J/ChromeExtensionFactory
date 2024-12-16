@@ -1,0 +1,24 @@
+/* /frontend/src/styles/TemplateLibrary.module.css */
+
+.templateLibraryContainer {
+    padding: 1rem;
+  }
+  
+  .templateList {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1rem;
+  }
+  
+  .templateList li {
+    background: #fff;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  }
+  
+  .uploadSection {
+    margin-top: 1rem;
+  }
+  

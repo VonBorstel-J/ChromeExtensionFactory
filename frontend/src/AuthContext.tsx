@@ -1,6 +1,6 @@
-
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
-import apiClient from './apiClient';
+// /frontend/src/AuthContext.tsx
+import React, { createContext, useState, useEffect, ReactNode, useMemo } from 'react';
+import { authenticateUser } from './utils/authHelpers';
 
 interface AuthContextType {
   token: string | null;
@@ -13,7 +13,7 @@ export const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [token, setToken] = useState<string | null>(localStorage.getItem('jwt'));
+  const [token, setTokenState] = useState<string | null>(localStorage.getItem('jwt'));
 
   useEffect(() => {
     if (token) {
@@ -23,8 +23,27 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, [token]);
 
+  useEffect(() => {
+    const verifyToken = async () => {
+      if (token) {
+        const isValid = await authenticateUser(token);
+        if (!isValid) {
+          setTokenState(null);
+        }
+      }
+    };
+    verifyToken();
+  }, [token]);
+
+  const setToken = (newToken: string | null) => {
+    setTokenState(newToken);
+  };
+
+  // Memoize the context value to prevent unnecessary re-renders
+  const value = useMemo(() => ({ token, setToken }), [token]);
+
   return (
-    <AuthContext.Provider value={{ token, setToken }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );

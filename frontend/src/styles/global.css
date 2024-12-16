@@ -1,1 +1,52 @@
-// Placeholder for global.css
+/* /frontend/src/styles/global.css */
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f0f0;
+    color: #333;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  button {
+    font-family: inherit;
+  }
+  
+  h1, h2, h3 {
+    color: #333;
+  }
+  
+  p {
+    line-height: 1.6;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    body {
+      background: #121212;
+      color: #e0e0e0;
+    }
+  
+    .card, .subscriptionTier, .homeContainer, .marketplaceContainer, .signupContainer, .loginContainer, .dashboardContainer {
+      background: #1e1e1e;
+      color: #e0e0e0;
+    }
+  
+    input, select, textarea, button {
+      background: #2c2c2c;
+      color: #e0e0e0;
+      border: 1px solid #555;
+    }
+  
+    input::placeholder {
+      color: #bbb;
+    }
+  
+    .error {
+      color: #ff6b6b;
+    }
+  }
+  
