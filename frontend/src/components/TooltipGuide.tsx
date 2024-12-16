@@ -5,8 +5,9 @@ import styles from '../styles/TooltipGuide.module.css';
 
 const TooltipGuide: React.FC = () => {
   const [isReady, setIsReady] = useState(false);
+  const [showFallback, setShowFallback] = useState(false);
   const steps: Step[] = [
-    { target: '.home-container', content: 'Welcome to the Chrome Extension Factory!' },
+    { target: '.homeContainer', content: 'Welcome to the Chrome Extension Factory!' },
     { target: '#login-button', content: 'Click here to log into your account.' },
     { target: '#signup-button', content: 'New user? Sign up here to create an account.' }
   ];
@@ -25,7 +26,7 @@ const TooltipGuide: React.FC = () => {
       } else if (attempts >= maxAttempts) {
         clearInterval(interval);
         console.error('One or more Joyride targets failed to mount.');
-        // Optionally, set a state to show fallback UI
+        setShowFallback(true); // Show fallback UI
       } else {
         console.warn('Waiting for Joyride targets to mount...');
       }
@@ -40,6 +41,14 @@ const TooltipGuide: React.FC = () => {
       console.log('Tour finished or skipped');
     }
   };
+
+  if (showFallback) {
+    return (
+      <div className={styles.fallbackContainer}>
+        <p>Welcome to the Chrome Extension Factory! Explore the features to get started.</p>
+      </div>
+    );
+  }
 
   if (!isReady) {
     // Optionally, display a loading indicator or nothing

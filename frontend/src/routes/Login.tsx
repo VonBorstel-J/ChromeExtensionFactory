@@ -62,7 +62,7 @@ const Login: React.FC = () => {
             {error}
           </p>
         )}
-        <button type="submit" disabled={isLoading}>
+        <button id="login-button" type="submit" disabled={isLoading}>
           {isLoading ? <LoadingIndicator /> : 'Login'}
         </button>
       </form>

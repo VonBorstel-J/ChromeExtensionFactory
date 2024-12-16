@@ -7,6 +7,7 @@ const Home: React.FC = () => {
     <div className={styles.homeContainer}>
       <h1>Welcome to the Chrome Extension Factory</h1>
       <p>Create, manage, and publish your custom Chrome extensions with ease.</p>
+      <button id="signup-button">Get Started</button> {}
     </div>
   );
 };

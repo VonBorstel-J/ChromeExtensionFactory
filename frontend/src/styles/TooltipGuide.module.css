@@ -1,0 +1,37 @@
+/* /frontend/src/styles/TooltipGuide.module.css */
+
+.fallbackContainer {
+    padding: 2rem;
+    background: #fff;
+    border-radius: 8px;
+    margin: 2rem auto;
+    text-align: center;
+    max-width: 600px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .fallbackContainer p {
+    color: #555;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .fallbackContainer button {
+    padding: 0.75rem 1.5rem;
+    background: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .fallbackContainer button:hover {
+    background: #45a049;
+  }
+  
+  .fallbackContainer button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5);
+  }
+  

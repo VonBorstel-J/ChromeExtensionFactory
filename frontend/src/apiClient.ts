@@ -12,15 +12,15 @@ const apiClient: AxiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
+  withCredentials: true, // Include credentials for cross-origin requests if needed
 });
 
 // Retry configuration for transient errors
 axiosRetry(apiClient, {
   retries: 3,
-  retryDelay: (retryCount) => {
-    return axiosRetry.exponentialDelay(retryCount);
-  },
+  retryDelay: (retryCount) => axiosRetry.exponentialDelay(retryCount),
   retryCondition: (error: AxiosError) => {
+    // Retry on network errors or 5xx status codes
     return axiosRetry.isNetworkError(error) || axiosRetry.isRetryableError(error);
   },
   onRetry: (retryCount, error, requestConfig) => {

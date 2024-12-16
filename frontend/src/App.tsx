@@ -14,6 +14,7 @@ const Dashboard = React.lazy(() => import('./routes/Dashboard'));
 const TemplateLibrary = React.lazy(() => import('./routes/TemplateLibrary'));
 const ProjectEditor = React.lazy(() => import('./routes/ProjectEditor'));
 const Marketplace = React.lazy(() => import('./routes/Marketplace'));
+const NotFound = React.lazy(() => import('./routes/NotFound')); 
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
               <Route path="/templates" element={<TemplateLibrary />} />
               <Route path="/projects/:id" element={<ProjectEditor />} />
               <Route path="/marketplace" element={<Marketplace />} />
+              <Route path="*" element={<NotFound />} /> {/* 404 Route */}
             </Routes>
           </Suspense>
         </ErrorBoundary>
