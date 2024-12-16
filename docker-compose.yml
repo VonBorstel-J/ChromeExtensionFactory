@@ -9,6 +9,7 @@ services:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: extension_factory
+      VITE_API_BASE_URL: http://backend:5000
     ports:
       - "5432:5432"
     volumes:
@@ -46,21 +47,21 @@ services:
 
   # Frontend Service
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: frontend_service
-    depends_on:
-      - backend
-    env_file:
-      - .env
-    ports:
-      - "3000:80"
-    restart: always
-    volumes:
-      - ./frontend:/app
-    networks:
-      - app_network
+  build:
+    context: ./frontend
+    dockerfile: Dockerfile
+  container_name: frontend_service
+  depends_on:
+    - backend
+  env_file:
+    - .env
+  ports:
+    - "3000:80"
+  restart: always
+  volumes:
+    - ./frontend:/app
+  networks:
+    - app_network
 
 volumes:
   db_data:  

@@ -23,7 +23,8 @@
   },
   "devDependencies": {
     "@rollup/plugin-terser": "",
-    "@types/node": "",
+    "@types/axios": "^0.9.36",
+    "@types/node": "^22.10.2",
     "@types/react": "",
     "@types/react-dom": "",
     "@types/react-router-dom": "",

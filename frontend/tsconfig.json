@@ -1,28 +1,27 @@
 {
-    "compilerOptions": {
-      "target": "ESNext",                     // Use the latest JavaScript features.
-      "lib": ["DOM", "DOM.Iterable", "ESNext"], // Libraries required for React and modern JS.
-      "allowJs": true,                       // Allow JavaScript files to coexist with TypeScript.
-      "skipLibCheck": true,                  // Skip type checking of declaration files for faster builds.
-      "esModuleInterop": true,               // Enable compatibility with CommonJS modules.
-      "allowSyntheticDefaultImports": true, // Allow default imports from modules without default exports.
-      "strict": true,                        // Enable all strict type-checking options.
-      "forceConsistentCasingInFileNames": true, // Ensure consistent file name casing.
-      "module": "ESNext",                    // Use ESNext module system.
-      "moduleResolution": "Node",           // Resolve modules in Node.js style.
-      "resolveJsonModule": true,            // Allow importing JSON files.
-      "isolatedModules": true,              // Ensure each file is treated as a separate module.
-      "jsx": "react-jsx",                   // Use the new JSX runtime (React 17+).
-      "noEmit": true,
-      "types": ["node"]                     // Do not emit compiled files (handled by React scripts).
-    },
-    "include": [
-      "src"                                 // Include all files in the `src` directory.
-    ],
-    "exclude": [
-      "node_modules",                       // Exclude `node_modules`.
-      "build",                              // Exclude the build folder.
-      "dist"                                // Exclude distribution files.
-    ]
-  }
-  
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "react-jsx",
+    "noEmit": true,
+    "types": ["node", "vite/client"] 
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "build",
+    "dist"
+  ]
+}
