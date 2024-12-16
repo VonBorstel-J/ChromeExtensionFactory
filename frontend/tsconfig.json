@@ -13,7 +13,8 @@
       "resolveJsonModule": true,            // Allow importing JSON files.
       "isolatedModules": true,              // Ensure each file is treated as a separate module.
       "jsx": "react-jsx",                   // Use the new JSX runtime (React 17+).
-      "noEmit": true                        // Do not emit compiled files (handled by React scripts).
+      "noEmit": true,
+      "types": ["node"]                     // Do not emit compiled files (handled by React scripts).
     },
     "include": [
       "src"                                 // Include all files in the `src` directory.
