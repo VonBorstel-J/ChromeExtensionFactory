@@ -16,11 +16,12 @@
     "interactjs": "",
     "monaco-editor": "",
     "react": "",
+    "react-content-loader": "^7.0.2",
     "react-dom": "",
     "react-joyride": "",
     "react-responsive": "",
     "react-router-dom": "",
-    "react-scripts": "",
+    "react-scripts": "^5.0.1",
     "react-skeleton-loader": ""
   },
   "devDependencies": {
@@ -28,7 +29,12 @@
   },
   "description": "The frontend is built with React and provides a user-friendly interface for interacting with the Chrome Extension Factory. It includes features such as user authentication, project management, template browsing, and live code editing with previews.",
   "main": "src/index.js",
-  "keywords": ["react", "frontend", "chrome-extension", "factory"],
+  "keywords": [
+    "react",
+    "frontend",
+    "chrome-extension",
+    "factory"
+  ],
   "author": "Jordan VonBorstel",
   "license": "MIT"
 }
