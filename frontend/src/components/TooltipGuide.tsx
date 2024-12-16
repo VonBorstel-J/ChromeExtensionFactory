@@ -1,45 +1,51 @@
-// /frontend/src/components/TooltipGuide.tsx 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Joyride, { CallBackProps, STATUS } from 'react-joyride';
 
-const steps = [
-  {
-    target: '.container',
-    content: 'Welcome to the Chrome Extension Factory! Let us guide you through the features.',
-  },
-  {
-    target: '#login-button',
-    content: 'Click here to log into your account.',
-  },
-  {
-    target: '#signup-button',
-    content: 'New user? Sign up here to create an account.',
-  },
-  // Add more steps as needed
-];
-
 const TooltipGuide: React.FC = () => {
-  const handleJoyrideCallback = (data: CallBackProps) => {
-    const { status } = data;
-    if ([STATUS.FINISHED, STATUS.SKIPPED].includes(status)) {
-      // Handle completion or skipping of the tour
-      console.log('Tour finished or skipped');
-    }
-  };
+    const [targetsMounted, setTargetsMounted] = useState(false);
 
-  return (
-    <Joyride
-      steps={steps}
-      continuous
-      showSkipButton
-      callback={handleJoyrideCallback}
-      styles={{
-        options: {
-          zIndex: 10000,
-        },
-      }}
-    />
-  );
+    const steps = [
+        { target: '.container', content: 'Welcome to the Chrome Extension Factory!' },
+        { target: '#login-button', content: 'Click here to log into your account.' },
+        { target: '#signup-button', content: 'New user? Sign up here to create an account.' }
+    ];
+
+    useEffect(() => {
+        const checkTargets = () => steps.every(step => document.querySelector(step.target));
+        const interval = setInterval(() => {
+            if (checkTargets()) {
+                setTargetsMounted(true);
+                clearInterval(interval);
+            } else {
+                console.warn('One or more Joyride targets not mounted.');
+            }
+        }, 100);
+
+        return () => clearInterval(interval);
+    }, [steps]);
+
+    if (!targetsMounted) return null;
+
+    const handleJoyrideCallback = (data: CallBackProps) => {
+        const { status } = data;
+        if (status === STATUS.FINISHED || status === STATUS.SKIPPED) {
+            console.log('Tour finished or skipped');
+        }
+    };
+
+    return (
+        <Joyride
+            steps={steps}
+            callback={handleJoyrideCallback}
+            showSkipButton
+            continuous
+            styles={{
+                options: {
+                    zIndex: 10000,
+                },
+            }}
+        />
+    );
 };
 
 export default TooltipGuide;

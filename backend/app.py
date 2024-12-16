@@ -40,9 +40,9 @@ db.init_app(app)
 
 # Security Headers
 csp = {
-    'default-src': [
-        "'self'"
-    ]
+    'default-src': ["'self'"],
+    'style-src': ["'self'", "'unsafe-inline'"],  # Allow inline styles temporarily
+    'script-src': ["'self'"],  # Still block inline scripts for security
 }
 Talisman(app, content_security_policy=csp)
 

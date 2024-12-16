@@ -17,5 +17,6 @@ export default defineConfig({
   build: {
     outDir: 'dist', // Specify the build output directory
     sourcemap: true, 
+    cssCodeSplit: true,
   },
 });

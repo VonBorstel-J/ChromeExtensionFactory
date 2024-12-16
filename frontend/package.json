@@ -9,17 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "",
+    "axios": "^1.7.9",
     "axios-retry": "",
-    "interactjs": "",
-    "monaco-editor": "",
-    "react": "",
+    "interactjs": "^1.10.27",
+    "monaco-editor": "^0.52.2",
+    "react": "^19.0.0",
     "react-content-loader": "",
-    "react-dom": "",
-    "react-joyride": "",
+    "react-dom": "^19.0.0",
+    "react-joyride": "^2.9.3",
     "react-loading-skeleton": "",
     "react-responsive": "",
-    "react-router-dom": ""
+    "react-router-dom": "^7.0.2"
   },
   "devDependencies": {
     "@rollup/plugin-terser": "",
