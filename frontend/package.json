@@ -2,12 +2,12 @@
   "name": "extension-factory-frontend",
   "version": "1.0.0",
   "description": "Frontend for Chrome Extension Factory with React and TypeScript.",
-  "main": "src/main.tsx",
+  "main": "src/App.tsx",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "clean": "rimraf dist"
+    "clean": "rimraf node_modules dist"
   },
   "dependencies": {
     "@testing-library/jest-dom": "^6.6.3",
@@ -40,7 +40,7 @@
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "",
     "eslint-plugin-react": "",
-    "rimraf": "",
+    "rimraf": "^6.0.1",
     "typescript": "",
     "vite": "^6.0.3"
   },

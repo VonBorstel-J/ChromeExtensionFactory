@@ -14,6 +14,11 @@ export default defineConfig({
       '@': '/src', // Alias for cleaner imports
     },
   },
+  css: {
+    modules: {
+      generateScopedName: '[name]__[local]___[hash:base64:5]',
+    },
+  },
   build: {
     outDir: 'dist', // Specify the build output directory
     sourcemap: true, 

@@ -1,4 +1,3 @@
-// /frontend/src/components/TooltipGuide.tsx
 import React, { useEffect, useState } from 'react';
 import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
 import styles from '../styles/TooltipGuide.module.css';
@@ -9,11 +8,11 @@ const TooltipGuide: React.FC = () => {
   const steps: Step[] = [
     { target: '.homeContainer', content: 'Welcome to the Chrome Extension Factory!' },
     { target: '#login-button', content: 'Click here to log into your account.' },
-    { target: '#signup-button', content: 'New user? Sign up here to create an account.' }
+    { target: '#signup-button', content: 'New user? Sign up here to create an account.' },
   ];
 
   useEffect(() => {
-    const checkTargets = () => steps.every(step => document.querySelector(step.target));
+    const checkTargets = () => steps.every(step => typeof step.target === 'string' && document.querySelector(step.target));
     const maxAttempts = 50; // e.g., wait up to 5 seconds
     let attempts = 0;
 
@@ -61,12 +60,12 @@ const TooltipGuide: React.FC = () => {
       callback={handleJoyrideCallback}
       showSkipButton
       continuous
+      run={isReady}
       styles={{
         options: {
           zIndex: 10000,
         },
       }}
-      run={isReady}
     />
   );
 };
