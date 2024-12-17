@@ -1,10 +1,10 @@
-// /frontend/src/routes/Dashboard.tsx
 import React, { useEffect, useState, useContext } from 'react';
 import apiClient from '../apiClient';
 import { AuthContext } from '../AuthContext';
 import { useNavigate } from 'react-router-dom';
-import Subscription from '../components/Subscription'; 
-import styles from '../styles/Dashboard.module.css'; 
+import Subscription from '../components/Subscription';
+import styles from '../styles/Dashboard.module.css';
+import { toast } from 'react-toastify';
 
 interface Project {
   id: number;
@@ -23,8 +23,8 @@ const Dashboard: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [popularTemplates, setPopularTemplates] = useState<PopularTemplate[]>([]);
   const [error, setError] = useState('');
-  const [userTier, setUserTier] = useState<'free'|'pro'|'enterprise'>('free'); // Assume we can fetch the user's tier
-  const [earnings, setEarnings] = useState<number>(0); // Dummy data
+  const [userTier, setUserTier] = useState<'free'|'pro'|'enterprise'>('free'); 
+  const [earnings, setEarnings] = useState<number>(0);
   const [animating, setAnimating] = useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -38,10 +38,8 @@ const Dashboard: React.FC = () => {
         ]);
         setProjects(projRes.data);
         setPopularTemplates(tempRes.data);
-        // Dummy logic for user tier and earnings:
-        // In a real scenario, you'd fetch this from a user endpoint.
-        setUserTier('pro'); // Example: set to 'pro' to display earnings
-        setEarnings(123.45); // Dummy earnings data
+        setUserTier('pro'); 
+        setEarnings(123.45); 
         setAnimating(true);
       } catch (err) {
         setError('Failed to load dashboard data.');
@@ -56,8 +54,10 @@ const Dashboard: React.FC = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       const downloadUrl = response.data.download_url;
+      toast.success('Extension published successfully!');
       alert(`Extension published successfully! Download URL: ${downloadUrl}`);
     } catch (err) {
+      toast.error('Failed to publish extension.');
       alert('Failed to publish extension.');
     }
   };
@@ -75,7 +75,9 @@ const Dashboard: React.FC = () => {
       document.body.appendChild(link);
       link.click();
       link.parentNode?.removeChild(link);
+      toast.success('Extension downloaded successfully!');
     } catch (err) {
+      toast.error('Failed to download extension.');
       alert('Failed to download extension.');
     }
   };
@@ -85,7 +87,6 @@ const Dashboard: React.FC = () => {
       <h1>Dashboard</h1>
       {error && <p className={styles.error}>{error}</p>}
 
-      {/* Analytics Dashboard Cards */}
       <div className={`${styles.dashboardCards} ${animating ? styles.fadeIn : ''}`}>
         <div className={styles.card}>
           <h2>Total Projects</h2>
@@ -107,13 +108,11 @@ const Dashboard: React.FC = () => {
         )}
       </div>
 
-      {/* Subscription Component */}
       <div className={styles.subscriptionSection}>
         <h2>Upgrade Your Plan</h2>
         <Subscription currentTier={userTier} />
       </div>
 
-      {/* Projects List */}
       <h2>Your Projects</h2>
       <ul className={styles.projectsList}>
         {projects.map((project) => (

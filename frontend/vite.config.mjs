@@ -4,14 +4,17 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 3000,
     fs: {
-      allow: ['src'], // Allow serving files from the src directory
-    },
+      allow: [
+        // Allow serving files from the project root and node_modules
+        './',
+        './node_modules'
+      ]
+    }
   },
   resolve: {
     alias: {
-      '@': '/src', // Alias for cleaner imports
+      '@': '/src',
     },
   },
   css: {
@@ -20,8 +23,8 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'dist', // Specify the build output directory
-    sourcemap: true, 
+    outDir: 'dist',
+    sourcemap: true,
     cssCodeSplit: true,
   },
 });

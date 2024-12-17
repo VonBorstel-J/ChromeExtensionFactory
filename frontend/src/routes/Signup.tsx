@@ -1,9 +1,9 @@
-// /frontend/src/routes/Signup.tsx
 import React, { useState } from 'react';
 import styles from '../styles/Signup.module.css';
 import apiClient from '../apiClient';
 import { useNavigate } from 'react-router-dom';
 import LoadingIndicator from '../components/LoadingIndicator';
+import { toast } from 'react-toastify';
 
 const Signup: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -23,9 +23,11 @@ const Signup: React.FC = () => {
     setError('');
     try {
       await apiClient.post('/auth/signup', { email, password });
+      toast.success('Signup successful! Please log in.');
       navigate('/login');
     } catch (err: any) {
       setError(err.response?.data?.error || 'Signup failed. Please try again.');
+      toast.error('Signup failed. Please try again.');
     } finally {
       setIsLoading(false);
     }

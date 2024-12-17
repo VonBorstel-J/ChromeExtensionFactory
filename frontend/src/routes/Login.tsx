@@ -1,10 +1,10 @@
-// /frontend/src/routes/Login.tsx
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../AuthContext';
 import apiClient from '../apiClient';
 import { useNavigate } from 'react-router-dom';
 import LoadingIndicator from '../components/LoadingIndicator';
 import styles from '../styles/Login.module.css';
+import { toast } from 'react-toastify';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -21,12 +21,15 @@ const Login: React.FC = () => {
     try {
       const response = await apiClient.post('/auth/login', { email, password });
       setToken(response.data.token);
+      toast.success('Logged in successfully!');
       navigate('/dashboard');
     } catch (err: any) {
       if (err.response && err.response.status === 401) {
         setError('Invalid email or password. Please check your credentials.');
+        toast.error('Invalid email or password.');
       } else {
         setError('An unexpected error occurred. Please try again later.');
+        toast.error('An unexpected error occurred.');
       }
     } finally {
       setIsLoading(false);

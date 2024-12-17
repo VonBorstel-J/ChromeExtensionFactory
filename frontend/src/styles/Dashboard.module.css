@@ -1,5 +1,3 @@
-/* /frontend/src/styles/Dashboard.module.css */
-
 .dashboardContainer {
   padding: 1rem;
   max-width: 1200px;
@@ -11,14 +9,15 @@
   margin-bottom: 1rem;
 }
 
+/* Animations */
 .dashboardCards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1rem;
   margin-bottom: 2rem;
   opacity: 0;
   transform: translateY(10px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .fadeIn {
@@ -31,11 +30,19 @@
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.card h2 {
+  margin-bottom: 0.5rem;
 }
 
 .popularTemplates {
   list-style: none;
   padding: 0;
+  max-height: 150px;
+  overflow-y: auto;
+  margin: 0;
 }
 
 .popularTemplates li {
@@ -47,11 +54,22 @@
 
 .subscriptionSection {
   margin-bottom: 2rem;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.subscriptionSection h2 {
+  margin-top: 0;
 }
 
 .projectsList {
   list-style: none;
   padding: 0;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .projectItem {
@@ -63,6 +81,11 @@
   flex-direction: column;
   gap: 0.5rem;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.projectItem:hover {
+  transform: translateY(-2px);
 }
 
 .projectButtons {
@@ -85,4 +108,10 @@
 
 .projectsList .projectItem h3 {
   margin: 0;
+}
+
+@media (max-width: 768px) {
+  .card, .subscriptionSection, .projectItem {
+    text-align: left;
+  }
 }

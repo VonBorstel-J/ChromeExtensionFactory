@@ -1,8 +1,8 @@
-// /frontend/src/routes/TemplateLibrary.tsx
 import React, { useState, useEffect, useContext } from 'react';
 import apiClient from '../apiClient';
 import { AuthContext } from '../AuthContext';
 import styles from '../styles/TemplateLibrary.module.css';
+import { toast } from 'react-toastify';
 
 interface Template {
   name: string;
@@ -23,7 +23,6 @@ const TemplateLibrary: React.FC = () => {
         const templates = response.data.map((t: string) => ({ name: t }));
         setAvailableTemplates(templates);
 
-        // Fetch user’s uploaded templates (for demonstration assume /templates/my)
         const myRes = await apiClient.get('/templates/my', {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -48,17 +47,18 @@ const TemplateLibrary: React.FC = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      // After upload, re-fetch my templates
       const myRes = await apiClient.get('/templates/my', {
         headers: { Authorization: `Bearer ${token}` },
       });
       const myTmpls = myRes.data.map((t: string) => ({ name: t }));
       setMyTemplates(myTmpls);
+      toast.success('Template uploaded successfully!');
     } catch (err) {
       console.error('Upload failed:', err);
+      toast.error('Failed to upload template.');
     } finally {
       setUploading(false);
-      e.target.value = ''; // reset file input
+      e.target.value = '';
     }
   };
 
