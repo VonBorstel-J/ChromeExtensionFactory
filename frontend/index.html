@@ -1,12 +1,12 @@
-<!-- /frontend/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self';">
+  <!-- UPDATED CSP: Only allow self-origin resources -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self';">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chrome Extension Factory</title>
-  <!-- Preload critical routes -->
+  <!-- Preload critical routes for faster initial load -->
   <link rel="preload" href="/src/routes/Home.tsx" as="script" crossorigin="anonymous" />
   <link rel="preload" href="/src/routes/Dashboard.tsx" as="script" crossorigin="anonymous" />
 </head>

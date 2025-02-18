@@ -5,7 +5,8 @@ class Config:
     @staticmethod
     def get_secret(secret_name: str, default_value: str = None) -> str:
         """
-        Fetch secret from GCP Secret Manager. Return default value if GCP is not configured.
+        Fetch a secret from GCP Secret Manager.
+        If not available (or in local development), return the default value.
         """
         project_id = os.getenv('GCP_PROJECT_ID')
         if not project_id:
@@ -23,11 +24,11 @@ class Config:
             logging.warning(f"Failed to fetch secret {secret_name}: {str(e)}. Using default value.")
             return default_value
 
-    # Fetch secrets with defaults for local development
+    # Secrets are now loaded via the helper function for security.
     SECRET_KEY = get_secret("FLASK_SECRET_KEY", "default_flask_secret")
     JWT_SECRET = get_secret("JWT_SECRET", "default_jwt_secret")
     API_KEY = get_secret("API_KEY", "default_api_key")
-    DATABASE_URL = get_secret("DATABASE_URL", "sqlite:///local.db")  # Fallback to SQLite for local dev
+    DATABASE_URL = get_secret("DATABASE_URL", "sqlite:///local.db")  # Fallback to SQLite for development
 
     # AWS S3
     AWS_ACCESS_KEY_ID = get_secret("AWS_ACCESS_KEY_ID", None)
@@ -40,7 +41,7 @@ class Config:
     ANTHROPIC_API_KEY = get_secret("ANTHROPIC_API_KEY", None)
     GEMINI_API_KEY = get_secret("GEMINI_API_KEY", None)
 
-    # Celery
+    # Celery configuration
     CELERY_BROKER_URL = get_secret("CELERY_BROKER_URL", "redis://redis:6379/0")
     CELERY_RESULT_BACKEND = get_secret("CELERY_RESULT_BACKEND", "redis://redis:6379/0")
 
