@@ -1,28 +1,62 @@
 # /backend/Dockerfile
 
-# Stage 1: Build the backend dependencies
-FROM python:3.10-slim as builder
+# Build stage
+FROM python:3.12-slim as builder
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+# Set working directory
 WORKDIR /app
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y gcc libpq-dev && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements and install Python dependencies
+# Install Python dependencies
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /app/wheels -r requirements.txt
 
-# Stage 2: Run the backend with Gunicorn and Gevent
-FROM python:3.10-slim
-WORKDIR /app
-COPY --from=builder /usr/local/lib/python3.10/site-packages /usr/local/lib/python3.10/site-packages
-COPY . .
+# Final stage
+FROM python:3.12-slim
 
 # Set environment variables
-ENV FLASK_APP=app.py
-ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PATH="/home/appuser/.local/bin:$PATH"
 
-# Expose port for the Flask application
-EXPOSE 5000
+# Create non-root user
+RUN addgroup --system appgroup && adduser --system --group appgroup appuser
 
-# Start Gunicorn with Gevent workers
-CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app", "--workers", "4", "--worker-class", "gevent", "--timeout", "120"]
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libpq5 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy wheels from builder
+COPY --from=builder /app/wheels /wheels
+COPY --from=builder /app/requirements.txt .
+
+# Install dependencies
+RUN pip install --no-cache /wheels/*
+
+# Copy application code
+COPY . .
+
+# Create necessary directories and set permissions
+RUN mkdir -p /app/logs && \
+    chown -R appuser:appgroup /app
+
+# Switch to non-root user
+USER appuser
+
+# Run the application with Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--workers", "4", "--timeout", "120", "--access-logfile", "-", "--error-logfile", "-", "app:app"]

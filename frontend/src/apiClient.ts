@@ -12,7 +12,8 @@ const apiClient: AxiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // Include credentials for cross-origin requests if needed
+  withCredentials: true,
+  timeout: 30000, // 30 seconds timeout
 });
 
 // Retry configuration for transient errors
@@ -21,7 +22,9 @@ axiosRetry(apiClient, {
   retryDelay: (retryCount) => axiosRetry.exponentialDelay(retryCount),
   retryCondition: (error: AxiosError) => {
     // Retry on network errors or 5xx status codes
-    return axiosRetry.isNetworkError(error) || axiosRetry.isRetryableError(error);
+    return axiosRetry.isNetworkError(error) || 
+           (error.response?.status && error.response.status >= 500) ||
+           error.code === 'ECONNABORTED';
   },
   onRetry: (retryCount, error, requestConfig) => {
     console.warn(`Retrying request to ${requestConfig.url} (${retryCount} attempt(s))`);
@@ -35,21 +38,55 @@ apiClient.interceptors.request.use(
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    
+    // Add CSRF token if available
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    if (csrfToken && config.headers) {
+      config.headers['X-CSRF-Token'] = csrfToken;
+    }
+    
     return config;
   },
-  (error: AxiosError) => Promise.reject(error)
+  (error: AxiosError) => {
+    console.error('Request error:', error);
+    return Promise.reject(error);
+  }
 );
 
 // Response interceptor
 apiClient.interceptors.response.use(
   (response) => response,
   (error: AxiosError) => {
+    // Handle specific error cases
+    if (error.response?.status === 401) {
+      // Clear token and redirect to login
+      localStorage.removeItem('jwt');
+      window.location.href = '/login';
+      return Promise.reject(new Error('Authentication required'));
+    }
+
+    if (error.response?.status === 403) {
+      return Promise.reject(new Error('Access denied'));
+    }
+
+    if (error.response?.status === 429) {
+      return Promise.reject(new Error('Too many requests. Please try again later.'));
+    }
+
     const errorMessage =
       error.response?.data && typeof error.response?.data === 'object'
-        ? (error.response?.data as { error?: string }).error ?? error.message
+        ? (error.response?.data as { error?: string; message?: string }).error ?? 
+          (error.response?.data as { error?: string; message?: string }).message ?? 
+          error.message
         : error.message;
 
-    console.error('API Error:', errorMessage);
+    console.error('API Error:', {
+      message: errorMessage,
+      status: error.response?.status,
+      url: error.config?.url,
+      method: error.config?.method
+    });
+
     return Promise.reject(new Error(errorMessage));
   }
 );

@@ -4,10 +4,14 @@ from db import db
 from models import User
 from auth import generate_token
 from schemas import UserSignupSchema, UserLoginSchema
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 auth_bp = Blueprint('auth', __name__)
+limiter = Limiter(key_func=get_remote_address)
 
 @auth_bp.route('/signup', methods=['POST'])
+@limiter.limit("5 per minute")
 def signup():
     data = request.get_json()
     try:
@@ -27,6 +31,7 @@ def signup():
     return jsonify({"token": token}), 200
 
 @auth_bp.route('/login', methods=['POST'])
+@limiter.limit("10 per minute")
 def login():
     data = request.get_json()
     try:
